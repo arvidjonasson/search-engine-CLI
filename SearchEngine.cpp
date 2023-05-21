@@ -14,7 +14,7 @@ SearchEngine &SearchEngine::compute(const std::wstring &query) {
     if(!new_files.empty()) {
         tfidf_computer.addDocuments(new_files);
     }
-    auto tokens = Tokenizer::tokenize(query);
+    auto tokens = Tokenizer::tokenize(query, verbose);
     tfidf_computer.compute(tokens);
     return *this;
 }
@@ -26,4 +26,10 @@ std::vector<TFIDFComputer::ResultType> SearchEngine::search(const std::wstring &
 
 std::vector<TFIDFComputer::ResultType> SearchEngine::getResults() {
     return tfidf_computer.getResults();
+}
+
+SearchEngine &SearchEngine::clear() noexcept {
+    directory_manager.clear();
+    tfidf_computer.clear();
+    return *this;
 }

@@ -10,6 +10,8 @@
 
 class SearchEngine {
 public:
+    SearchEngine() : directory_manager(verbose), tfidf_computer(verbose) {}
+
     SearchEngine &addDirectory(const std::filesystem::path &directory_path);
 
     SearchEngine &compute(const std::wstring &query);
@@ -18,6 +20,9 @@ public:
 
     std::vector<TFIDFComputer::ResultType> getResults();
 
+    SearchEngine &clear() noexcept;
+
+    bool verbose = false;
 private:
     DirectoryManager directory_manager;
     TFIDFComputer tfidf_computer;

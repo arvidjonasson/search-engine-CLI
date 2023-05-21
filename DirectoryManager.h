@@ -10,6 +10,8 @@
 
 class DirectoryManager {
 public:
+    DirectoryManager(const bool &verbose) : verbose(verbose) {}
+
     DirectoryManager addDirectory(const std::filesystem::path &directory_path);
     [[nodiscard]] std::vector<std::filesystem::path> getFiles();
     [[nodiscard]] std::vector<std::filesystem::path> getDirectories() const;
@@ -23,6 +25,7 @@ private:
     // A set to keep track of visited directiories, thus avoid including a file twice
     std::vector<std::filesystem::path> files;
     // Files that will be returned to the user
+    const bool &verbose = false;
 };
 
 

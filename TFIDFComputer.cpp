@@ -82,7 +82,7 @@ void TFIDFComputer::addDocuments(const std::vector<PathType> &documents) {
     // This is purely for optimization.
 
     for(size_t documentIndex = 0; auto &document : documents) {
-        auto words = Tokenizer::tokenize(document);
+        auto words = Tokenizer::tokenize(document, verbose);
         emplaceBackDocuments(document, words.size(), this->documents, results);
         // We'll add the document to the documents vector and add a reference to it to the results vector.
         for (auto &word: words)

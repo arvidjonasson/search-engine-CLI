@@ -16,9 +16,9 @@
 
 class Tokenizer {
 public:
-    [[nodiscard]] static std::vector<std::wstring> tokenize(const std::wstring& input);
+    [[nodiscard]] static std::vector<std::wstring> tokenize(const std::wstring& input, const bool &verbose = false);
 
-    [[nodiscard]] static std::vector<std::wstring> tokenize(const std::filesystem::path& input);
+    [[nodiscard]] static std::vector<std::wstring> tokenize(const std::filesystem::path& input, const bool &verbose = false);
 };
 
 #endif //SEARCH_ENGINE_TOKENIZER_H

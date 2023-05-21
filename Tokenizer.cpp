@@ -4,6 +4,7 @@
 
 #include "Tokenizer.h"
 #include <fstream>
+#include <iostream>
 
 struct Token {
     std::wstring token;
@@ -36,18 +37,32 @@ static inline void parse(wchar_t c, Token &currentToken, std::vector<std::wstrin
     }
 }
 
-std::vector<std::wstring> Tokenizer::tokenize(const std::wstring &input) {
+std::vector<std::wstring> Tokenizer::tokenize(const std::wstring &input, const bool &verbose) {
     std::vector<std::wstring> tokens;
     Token currentToken;
+
+    if(verbose) {
+        std::wcout << L"Tokenizing " << std::quoted(input) << std::endl;
+    }
 
     for (wchar_t c : input) {
         parse(c, currentToken, tokens);
     }
     addToken(currentToken, tokens);
+
+    if(verbose) {
+        std::wcout << L"Tokens: [";
+        for(size_t idx = 0, size = tokens.size(); idx < size; ++idx) {
+            if(idx) std::wcout << L", ";
+            std::wcout << tokens[idx];
+        }
+        std::wcout << L"]" << std::endl;
+    }
+
     return tokens;
 }
 
-std::vector<std::wstring> Tokenizer::tokenize(const std::filesystem::path &input) {
+std::vector<std::wstring> Tokenizer::tokenize(const std::filesystem::path &input, const bool &verbose) {
     if (!exists(input))
         throw std::runtime_error("File does not exist: " + input.string());
 
@@ -58,6 +73,9 @@ std::vector<std::wstring> Tokenizer::tokenize(const std::filesystem::path &input
     if (file.fail())
         throw std::runtime_error("Could not open file: " + input.string());
 
+    if(verbose) {
+        std::wcout << L"Tokenizing " << std::quoted(input.wstring()) << std::endl;
+    }
 
     std::vector<std::wstring> tokens;
     Token currentToken;
@@ -67,6 +85,11 @@ std::vector<std::wstring> Tokenizer::tokenize(const std::filesystem::path &input
         parse(c, currentToken, tokens);
     }
     addToken(currentToken, tokens);
+
+    if(verbose) {
+        std::wcout << L"Total tokens: " << tokens.size() << L'.' << std::endl;
+    }
+
     file.close();
     return tokens;
 }

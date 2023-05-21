@@ -32,15 +32,17 @@ public:
 
     struct Token {
         std::vector<FrequencyType> frequencies;
-        FrequencyType doc_frequency;
-        ScoreType idf_score;
+        FrequencyType doc_frequency{};
+        ScoreType idf_score{};
     };
 
     struct DocumentType {
         std::filesystem::path path;
-        ScoreType tfidf_score;
-        FrequencyType total_words;
+        ScoreType tfidf_score{};
+        FrequencyType total_words{};
     };
+
+    TFIDFComputer(const bool &verbose) : verbose(verbose) {}
 
     void clear() noexcept;
 
@@ -56,6 +58,7 @@ private:
     std::unordered_map<std::wstring, Token> tokens;
     std::vector<DocumentType> documents;
     std::vector<ResultType> results;
+    const bool &verbose = false;
 };
 
 
